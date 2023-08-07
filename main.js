@@ -1,12 +1,9 @@
-const choices = ["rock", "paper", "scissors"];
+const choices = ["rock", "paper", "scissors"]; 
 
 function getComputerChoice(){
     let index = Math.floor(Math.random() * choices.length);
-    console.log(index)
-    console.log(choices[index]);
     return choices[index];
 }
-const playerSelection = "PAPER";
 const computerSelection = getComputerChoice()
 
 function singleRound(computerSelection,playerSelection) {
@@ -56,4 +53,21 @@ function singleRound(computerSelection,playerSelection) {
     }
 }
 
-console.log(singleRound(computerSelection,playerSelection));
+function gamePlay(){
+    let computerScore = 0;
+    let playerScore = 0;
+    for(i=0; i<5; i++){
+        playerSelection = prompt("Enter your choice!!");
+        let result = singleRound(computerSelection,playerSelection);
+        if (result.includes("You Lose!")){
+            computerScore++;
+        }
+        else if (result.includes("You Won!")){
+            playerScore++;
+        }
+    }
+    let finalResult = (computerScore>playerScore) ? `Computer won the match | Computer Score: ${computerScore}| Player Score: ${playerScore}`: `Player won the match | Player Score: ${playerScore}| Computer Score: ${computerScore}`;
+    return finalResult
+}
+
+console.log(gamePlay())
