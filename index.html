@@ -8,18 +8,16 @@
 </head>
 <body>
     <header>
-        <h1 id="game-intro">Let's Begin The Game!!</h1>
+        <h1 id="game-intro"></h1>
     </header>
     <main>
         <div id="game-console">
             <div class="start-game"><button>Start Game</button></div>
-            <div class="game-instructions">
-                <p>You have got 5 chances to beat that <span>Smart Pants!!</span></p>
-            </div>
+            <p class="game-instructions"></p>
             <div class="play-area">
-                <button class="btn"><img src="images/rock.png" alt="Rock-option"></button>
-                <button class="btn"><img src="images/paper.png" alt="Paper-option"></button>
-                <button class="btn"><img src="images/scissors.png" alt="Scissors-option"></button>
+                <button id="rock" class="btn"><img src="images/rock.png" alt="Rock-option"></button>
+                <button id="paper" class="btn"><img src="images/paper.png" alt="Paper-option"></button>
+                <button id="scissors" class="btn"><img src="images/scissors.png" alt="Scissors-option"></button>
             </div>
         </div>
         <div id="results">
@@ -40,5 +38,6 @@
         </div>
     </main>
     <!-- <script src="main.js"></script> -->
+    <script src="event.js"></script>
 </body>
 </html>
