@@ -23,15 +23,12 @@ const paperBtn = document.querySelector("#paper");
 const scissorsBtn = document.querySelector("#scissors");
 
 
-const choices = ["rock", "paper", "scissors"];  //computer choices array
-
 //function to let compute pick its hand
 function getComputerChoice(){
+    const choices = ["rock", "paper", "scissors"];  //computer choices array
     let index = Math.floor(Math.random() * choices.length);
     return choices[index];
 }
-//globally accessible computer choice
-const computerSelection = getComputerChoice()
 
 // funtion to evaluate a single round results
 function singleRound(computerSelection,playerSelection) {
@@ -76,11 +73,10 @@ function singleRound(computerSelection,playerSelection) {
     }
 }
 // function to add event listener to buttons
-function eventListenerFunc(btn){
+function eventListenerFunc(btn,computerSelection){
     btn.addEventListener('click', () => {
-        let result='';
         let playerSelection = btn.getAttribute('id');
-        result = singleRound(computerSelection,playerSelection);
+        let result = singleRound(computerSelection,playerSelection);
         const resultElment = document.querySelector('#results');
         resultElment.innerText = result;
         resultElment.style.display = 'block';
@@ -88,30 +84,28 @@ function eventListenerFunc(btn){
             resultElment.style.display = 'none';
         }
         setTimeout(backToNone,700);
-        return result;
     });
 }
 
-// function gamePlay(){
-//     //initial scores of the players
-//     const playerScoreDisplay = document.querySelector('.player-score');
-//     const computerScoreDisplay = document.querySelector('.computer-score');
-//     let computerScore = 0;
-//     let playerScore = 0;
+function gamePlay(){
+    let computerScore = 0;
+    let playerScore = 0;
 
-//     // to make them play 5 rounds
-//     for(i=0; i<5; i++){
-//         let result = eventListenerFunc(rockBtn)||eventListenerFunc(paperBtn)||eventListenerFunc(scissorsBtn);
-//         if (result.includes("You Lose!")){
-//             computerScore++;
-//             computerScoreDisplay.innerText = computerScore;
-//         }
-//         else if (result.includes("You Won!")){
-//             playerScore++;
-//             playerScoreDisplay.innerText = playerScore;
-//         }
-//     }
-//     //final result evaluation
-//     let finalResult = (computerScore>playerScore) ? `Computer won the match | Computer Score: ${computerScore}| Player Score: ${playerScore}`: `Player won the match | Player Score: ${playerScore}| Computer Score: ${computerScore}`;
-//     return finalResult
-// }
+    while(computerScore==0||playerScore==0){
+        let computerSelection = getComputerChoice()
+        eventListenerFunc(rockBtn,computerSelection);
+        eventListenerFunc(paperBtn,computerSelection);
+        eventListenerFunc(scissorsBtn,computerSelection);
+
+        const resultElment = document.querySelector('#results');
+        let result = resultElment.innerText;
+        if (result.includes("You Lose!")){
+            computerScore++;
+        }
+        else if (result.includes("You Won!")){
+            playerScore++;
+        }
+    }
+}
+
+gamePlay();

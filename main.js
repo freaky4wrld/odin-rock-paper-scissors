@@ -59,12 +59,7 @@ function gamePlay(){
     // to make them play 5 rounds
     for(i=0; i<5; i++){
         let result = eventListenerFunc(rockBtn)||eventListenerFunc(paperBtn)||eventListenerFunc(scissorsBtn);
-        if (result.includes("You Lose!")){
-            computerScore++;
-        }
-        else if (result.includes("You Won!")){
-            playerScore++;
-        }
+        
     }
     //final result evaluation
     let finalResult = (computerScore>playerScore) ? `Computer won the match | Computer Score: ${computerScore}| Player Score: ${playerScore}`: `Player won the match | Player Score: ${playerScore}| Computer Score: ${computerScore}`;
