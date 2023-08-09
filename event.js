@@ -17,95 +17,128 @@ startGameBtn.firstChild.addEventListener('click', () => {
     typeWriter(gameInstructText,gameInstruct,0);
 },{once:true})
 
-// button functionality with logic
+// button functionality 
 const rockBtn = document.querySelector("#rock");
 const paperBtn = document.querySelector("#paper");
 const scissorsBtn = document.querySelector("#scissors");
+// Active Stages
+const resultDisplay = document.querySelector("#results");
+const playerScoreDisplay = document.querySelector('#player-score');
+const computerScoreDisplay = document.querySelector("#computer-score");
 
-
-//function to let compute pick its hand
 function getComputerChoice(){
-    const choices = ["rock", "paper", "scissors"];  //computer choices array
+    const choices = ["rock", "paper", "scissors"]; 
     let index = Math.floor(Math.random() * choices.length);
     return choices[index];
 }
 
-// funtion to evaluate a single round results
-function singleRound(computerSelection,playerSelection) {
 
-    //result evaluation
-    if (computerSelection!==playerSelection) {
-        switch (playerSelection) {
+function checkGameEnd(computerScore,playerScore){
+    return computerScore==5 || playerScore==5?true:false;
+}
+
+function checkGamePointWinner(computerHand,playerHand){
+    if (computerHand!==playerHand) {
+        switch (playerHand) {
             case "rock":
-                switch (computerSelection) {
+                switch (computerHand) {
                     case "paper":
-                        return "You Lose! Paper beats Rock"
+                        return "You Lose! Paper beats Rock";
                         break;
                     case "scissors":
-                        return "You Won! Rock beats Scissors"
+                        return "You Won! Rock beats Scissors";
+                        break;
                 }
                 break;
     
             case "paper":
-                switch (computerSelection) {
+                switch (computerHand) {
                     case "rock":
-                        return "You Won! Paper beats Rock"
+                        return "You Won! Paper beats Rock";
                         break;
                     case "scissors":
-                        return "You Lose! Scissors beats Paper"
+                        return "You Lose! Scissors beats Paper";
+                        break;
                 }
                 break;
     
             case "scissors":
-                switch (computerSelection) {
+                switch (computerHand) {
                     case "rock":
-                        return "You Lose! Rock beats Scissors"
+               return "You Lose! Rock beats Scissors";
                         break;
                     case "paper":
-                        return "You Won! Scissors beats Paper"
+                        return "You Won! Scissors beats Paper";
+                        break;
                 }
                 break;
         }
     }
     // if it's a tie
-    else if (playerSelection==computerSelection){
+    else if (playerHand==computerHand){
         return "It's a Tie! You got one more attempt"
     }
 }
-// function to add event listener to buttons
-function eventListenerFunc(btn,computerSelection){
-    btn.addEventListener('click', () => {
-        let playerSelection = btn.getAttribute('id');
-        let result = singleRound(computerSelection,playerSelection);
-        const resultElment = document.querySelector('#results');
-        resultElment.innerText = result;
-        resultElment.style.display = 'block';
-        function backToNone(){
-            resultElment.style.display = 'none';
-        }
-        setTimeout(backToNone,700);
-    });
+function displayResultNone(){
+    resultDisplay.style.display = 'None';
 }
-
-function gamePlay(){
-    let computerScore = 0;
-    let playerScore = 0;
-
-    while(computerScore==0||playerScore==0){
-        let computerSelection = getComputerChoice()
-        eventListenerFunc(rockBtn,computerSelection);
-        eventListenerFunc(paperBtn,computerSelection);
-        eventListenerFunc(scissorsBtn,computerSelection);
-
-        const resultElment = document.querySelector('#results');
-        let result = resultElment.innerText;
-        if (result.includes("You Lose!")){
+function displayResult(msg,speed=900){
+    resultDisplay.innerText = msg;
+    resultDisplay.style.display = 'block';
+    setTimeout(displayResultNone,speed);
+}
+function playerScoreOnBoard(score){
+    playerScoreDisplay.innerText = `${score}`
+}
+function computerScoreOnBoard(score){
+    computerScoreDisplay.innerText = `${score}`
+}
+function scoreKeeper(computerScore,playerScore,computerHand,playerHand){
+    if(!checkGameEnd(computerScore,playerScore)){
+        let pointWinnerMsg = checkGamePointWinner(computerHand,playerHand);
+        displayResult(pointWinnerMsg);
+        if(pointWinnerMsg.includes('You Lose!')){
             computerScore++;
+            computerScoreOnBoard(computerScore);
+            return [computerScore,playerScore];
         }
-        else if (result.includes("You Won!")){
+        else if(pointWinnerMsg.includes('You Won!')){
             playerScore++;
+            playerScoreOnBoard(playerScore);
+            return  [computerScore,playerScore];
         }
     }
 }
 
-gamePlay();
+function gameReset(computerScore,playerScore){
+    if(checkGameEnd(computerScore,playerScore)){
+        displayResult("Game ended, final scores declared!!",1200);
+        startGameBtn.style.display = 'block';
+        gameInstruct.style.display = 'none';
+        gameIntro.style.display = 'none';
+        startGameBtn.addEventListener('click', ()=>{
+            startGameBtn.style.display = 'none';
+            playerScoreOnBoard(0);
+            computerScoreOnBoard(0);
+            gameIntro.style.display = 'block';
+            gameInstruct.style.display = 'block';
+        })
+        return false;
+    }
+    return  true;
+}
+
+
+
+function gameMaintainer(){
+    let computerScore = 0;
+    let playerScore = 0;
+    let computerHand = getComputerChoice();
+    if(!gameReset){
+        rockBtn.addEventListener('click',scoreKeeper(computerScore,playerScore,computerHand,rockBtn.getAttribute('id')));
+        paperBtn.addEventListener('click',scoreKeeper(computerScore,playerScore,computerHand,paperBtn.getAttribute('id')));
+        scissorsBtn.addEventListener('click',scoreKeeper(computerScore,playerScore,computerHand,scissorsBtn.getAttribute('id')));
+    }
+}
+
+gameMaintainer()
