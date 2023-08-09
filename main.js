@@ -59,25 +59,25 @@ function singleRound(computerSelection,playerSelection) {
     }
 }
 //function to let the user enter it's choice and evaluate the result after 5 singleRound
-function gamePlay(){
-    //initial scores of the players
-    let computerScore = 0;
-    let playerScore = 0;
+// function gamePlay(){
+//     //initial scores of the players
+//     let computerScore = 0;
+//     let playerScore = 0;
 
-    // to make them play 5 rounds
-    for(i=0; i<5; i++){
-        playerSelection = prompt("Enter your choice!!");
-        let result = singleRound(computerSelection,playerSelection);
-        if (result.includes("You Lose!")){
-            computerScore++;
-        }
-        else if (result.includes("You Won!")){
-            playerScore++;
-        }
-    }
-    //final result evaluation
-    let finalResult = (computerScore>playerScore) ? `Computer won the match | Computer Score: ${computerScore}| Player Score: ${playerScore}`: `Player won the match | Player Score: ${playerScore}| Computer Score: ${computerScore}`;
-    return finalResult
-}
+//     // to make them play 5 rounds
+//     for(i=0; i<5; i++){
+//         playerSelection = prompt("Enter your choice!!");
+//         let result = singleRound(computerSelection,playerSelection);
+//         if (result.includes("You Lose!")){
+//             computerScore++;
+//         }
+//         else if (result.includes("You Won!")){
+//             playerScore++;
+//         }
+//     }
+//     //final result evaluation
+//     let finalResult = (computerScore>playerScore) ? `Computer won the match | Computer Score: ${computerScore}| Player Score: ${playerScore}`: `Player won the match | Player Score: ${playerScore}| Computer Score: ${computerScore}`;
+//     return finalResult
+// }
 
-console.log(gamePlay())
+// console.log(gamePlay())

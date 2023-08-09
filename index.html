@@ -4,9 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odin Project | Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p>This is a  rock-paper-scissors game, under development. You can play it in the console</p>
-    <script src="main.js"></script>
+    <header>
+        <h1 id="game-intro">Let's Begin The Game!!</h1>
+    </header>
+    <main>
+        <div id="game-console">
+            <div class="start-game"><button>Start Game</button></div>
+            <div class="game-instructions">
+                <p>You have got 5 chances to beat that <span>Smart Pants!!</span></p>
+            </div>
+            <div class="play-area">
+                <button class="btn"><img src="images/rock.png" alt="Rock-option"></button>
+                <button class="btn"><img src="images/paper.png" alt="Paper-option"></button>
+                <button class="btn"><img src="images/scissors.png" alt="Scissors-option"></button>
+            </div>
+        </div>
+        <div id="results">
+            <p>Sample text for winner!!</p>
+        </div>
+        <div class="score-card">
+            <div class="score-head"><h2>Score Board</h2></div>
+            <div class="score-results">
+                <div class="scores">
+                    <h3>Player</h3>
+                    <p>0</p>
+                </div>
+                <div class="line-vertical"></div>
+                <div class="scores">
+                    <h3>Computer</h3>
+                    <p>0</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- <script src="main.js"></script> -->
 </body>
 </html>
