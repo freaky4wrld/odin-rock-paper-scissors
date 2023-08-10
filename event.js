@@ -118,27 +118,37 @@ function gameReset(computerScore,playerScore){
         gameIntro.style.display = 'none';
         startGameBtn.addEventListener('click', ()=>{
             startGameBtn.style.display = 'none';
+            computerScore = 0;
+            playerScore = 0;
             playerScoreOnBoard(0);
             computerScoreOnBoard(0);
             gameIntro.style.display = 'block';
             gameInstruct.style.display = 'block';
         })
-        return false;
+        return true;
     }
-    return  true;
+    return  false;
 }
 
 
 
-function gameMaintainer(){
-    let computerScore = 0;
-    let playerScore = 0;
+function gameMaintainer(playerHand,computerScore,playerScore){
     let computerHand = getComputerChoice();
-    if(!gameReset){
-        rockBtn.addEventListener('click',scoreKeeper(computerScore,playerScore,computerHand,rockBtn.getAttribute('id')));
-        paperBtn.addEventListener('click',scoreKeeper(computerScore,playerScore,computerHand,paperBtn.getAttribute('id')));
-        scissorsBtn.addEventListener('click',scoreKeeper(computerScore,playerScore,computerHand,scissorsBtn.getAttribute('id')));
+    // console.log('inside the function')
+    if(!gameReset(computerScore,playerScore)){
+        // console.log('inside scoreKeeper')
+        var scoreList = scoreKeeper(computerScore,playerScore,computerHand,playerHand);
+        computerScore = scoreList[0];
+        playerScore = scoreList[1];
+        // return [computerScore,playerScore]
     }
+    else{gameReset(computerScore,playerScore);}
 }
 
-gameMaintainer()
+let globalScore = [0,0]
+var computerScore = globalScore[0];
+var playerScore = globalScore[1];
+
+rockBtn.addEventListener('click', gameMaintainer('rock',computerScore,playerScore));
+paperBtn.addEventListener('click', gameMaintainer('paper',computerScore,playerScore));
+scissorsBtn.addEventListener('click', gameMaintainer('scissors',computerScore,playerScore));
