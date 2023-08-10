@@ -11,7 +11,7 @@ function typeWriter(text, blankElement,i){
         setTimeout(typeWriter.bind(null,text,blankElement,i),50);
     }
 }
-startGameBtn.firstChild.addEventListener('click', () => {
+startGameBtn.addEventListener('click', () => {
     startGameBtn.style.display = 'none'; 
     typeWriter(gameIntroText,gameIntro,0);
     typeWriter(gameInstructText,gameInstruct,0);
@@ -27,6 +27,7 @@ const playerScoreDisplay = document.querySelector('#player-score');
 const computerScoreDisplay = document.querySelector("#computer-score");
 
 function getComputerChoice(){
+
     const choices = ["rock", "paper", "scissors"]; 
     let index = Math.floor(Math.random() * choices.length);
     return choices[index];
@@ -83,72 +84,76 @@ function displayResultNone(){
     resultDisplay.style.display = 'None';
 }
 function displayResult(msg,speed=900){
+
     resultDisplay.innerText = msg;
     resultDisplay.style.display = 'block';
     setTimeout(displayResultNone,speed);
 }
 function playerScoreOnBoard(score){
-    playerScoreDisplay.innerText = `${score}`
+    playerScoreDisplay.innerText = `${score}` ;
+
 }
 function computerScoreOnBoard(score){
-    computerScoreDisplay.innerText = `${score}`
+    computerScoreDisplay.innerText = `${score}`;
+
 }
 function scoreKeeper(computerScore,playerScore,computerHand,playerHand){
     if(!checkGameEnd(computerScore,playerScore)){
         let pointWinnerMsg = checkGamePointWinner(computerHand,playerHand);
         displayResult(pointWinnerMsg);
         if(pointWinnerMsg.includes('You Lose!')){
-            computerScore++;
-            computerScoreOnBoard(computerScore);
-            return [computerScore,playerScore];
+            return [1,0];
         }
         else if(pointWinnerMsg.includes('You Won!')){
-            playerScore++;
-            playerScoreOnBoard(playerScore);
-            return  [computerScore,playerScore];
+            return  [0,1];
         }
+        else return [0,0]
+    }
+    else {
+        gameReset();
     }
 }
 
-function gameReset(computerScore,playerScore){
-    if(checkGameEnd(computerScore,playerScore)){
+function gameReset(){
         displayResult("Game ended, final scores declared!!",1200);
         startGameBtn.style.display = 'block';
         gameInstruct.style.display = 'none';
         gameIntro.style.display = 'none';
+        scoreC = 0;
+        scoreP = 0;
+        playerScoreOnBoard(0);
+        computerScoreOnBoard(0);
         startGameBtn.addEventListener('click', ()=>{
             startGameBtn.style.display = 'none';
-            computerScore = 0;
-            playerScore = 0;
-            playerScoreOnBoard(0);
-            computerScoreOnBoard(0);
             gameIntro.style.display = 'block';
             gameInstruct.style.display = 'block';
-        })
-        return true;
-    }
-    return  false;
+        });
+
 }
 
 
 
 function gameMaintainer(playerHand,computerScore,playerScore){
+
     let computerHand = getComputerChoice();
-    // console.log('inside the function')
-    if(!gameReset(computerScore,playerScore)){
-        // console.log('inside scoreKeeper')
+    if(!checkGameEnd(scoreP,scoreC)){
         var scoreList = scoreKeeper(computerScore,playerScore,computerHand,playerHand);
-        computerScore = scoreList[0];
-        playerScore = scoreList[1];
-        // return [computerScore,playerScore]
+        scoreP=scoreP+scoreList[0];
+        scoreC=scoreC+scoreList[1];
+        computerScoreOnBoard(scoreP);
+        playerScoreOnBoard(scoreC);
     }
-    else{gameReset(computerScore,playerScore);}
-}
+    else{
+        gameReset();
+} }
 
 let globalScore = [0,0]
-var computerScore = globalScore[0];
-var playerScore = globalScore[1];
+let computerScore = 0;
+let playerScore = 0;
 
-rockBtn.addEventListener('click', gameMaintainer('rock',computerScore,playerScore));
-paperBtn.addEventListener('click', gameMaintainer('paper',computerScore,playerScore));
-scissorsBtn.addEventListener('click', gameMaintainer('scissors',computerScore,playerScore));
+let scoreP=0;
+let scoreC=0;
+
+rockBtn.addEventListener('click', ()=>{gameMaintainer('rock',computerScore,playerScore)});
+paperBtn.addEventListener('click', ()=>{gameMaintainer('paper',computerScore,playerScore)});
+scissorsBtn.addEventListener('click',()=>{gameMaintainer('scissors',computerScore,playerScore)});
