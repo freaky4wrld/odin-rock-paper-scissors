@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Press Start 2P', cursive;
+    color: rgb(166, 250, 39);
+    background-color: rgba(0, 0, 0,0.9);
+}
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem
+}
+.start-game{
+    width: 27%;
+    margin: 0.7rem auto;
+}
+.start-game button{
+    font-family: 'Press Start 2P', cursive;
+    border: rgb(166, 250, 39) dashed 4px;
+    color: rgb(166, 250, 39);
+    padding: 0.9rem 2rem;
+    background-color: rgba(0, 0, 0,0.9);
+}
+.game-instructions{
+    margin: 0.9rem auto;
+    width: 80%;
+    text-align: center;
+    line-height: 1.8rem;
+}
+.play-area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7rem;
+    margin: 2rem;
+    border: rgb(166, 250, 39) double 4px;
+    padding: 3rem 1rem;
+}
+.play-area .btn{
+    border: rgb(166, 250, 39) inset 4px;
+    background-color: rgba(0, 0, 0,0.9);
+}
+#results{
+    width: 50%;
+    margin: 0.2rem auto;
+    text-align: center;
+    display: none;
+}
+.score-card{
+    margin: 0.9rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: rgb(166, 250, 39) ridge 4px;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.score-results{
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem
+}
+.scores h3{
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+.scores p{text-align: center;}
+
+/* hover */
+.start-game button:hover{
+    cursor: pointer;
+    border: white double 4px;
+    color: #fff;
+}
+.play-area .btn:hover{
+    transform: scale(1.05);
+    border: white double 4px;
+}
+
+/* Mobile  Responsiveness */
+@media screen and (max-width: 600px) {
+    main,header{
+        margin: 2rem  1rem;
+    }
+    header #game-intro{
+        text-align: center;
+    }
+    .start-game{
+        width: 33vw;
+    }
+    .game-instructions{
+        width: 60%;
+    }
+    .play-area{
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1rem 0;
+    }
+}
